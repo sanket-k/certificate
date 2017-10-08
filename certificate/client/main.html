@@ -1,25 +1,37 @@
 <head>
-  <title>certificate</title>
+  <title>certificate test</title>
+  <h1>certificate test</h1>
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+  <input id="organization_name" type="text" placeholder="Organization Name">
+  <input id="organization_address" type="text" placeholder="Organization Address">
+  <input id="organization_details" type="text" placeholder="Organization Details"><br>
+  <button id="button_add_organization">Add Organization</button><br>
 
-  {{> hello}}
-  {{> info}}
+  <h3>Organization Details</h3>
+  <input id="get_organization" type="text" placeholder="Enter Organization Address"><br>
+  <button id="button_get_organization_details">Get Details</button><br>
+  <pre id="organization_details_name"> </pre><br>
+  <pre id="organization_details_details"> </pre><br>
+
+  <h3>Certify</h3>
+  <input id="certify_UIN" type="text" placeholder="UIN"><br>
+  <input id="certify_first_name" type="text" placeholder="First Name"><br>
+  <input id="certify_last_name" type="text" placeholder="Last Name"><br>
+  <input id="certify_certified_in" type="text" placeholder="Feild of Certification"><br>
+  <input id="certify_date" type="text" placeholder="Date"><br>
+  <button id="button_certify">Certify</button><br>
+
+  <h3>View Certificate</h3>
+  <input id="view_certificate_UIN" type="text" placeholder="UIN">
+  <button id="button_view_certificate"> View Certificate</button>
+  <pre id="view_certificate_first_name"></pre><br>
+  <pre id="view_certificate_last_name"></pre><br>
+  <pre id="view_certificate_certified_in"></pre><br>
+  <pre id="view_certificate_date"></pre><br>
+
+  <script>
+    
+  </script>
 </body>
-
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
-</template>
-
-<template name="info">
-  <h2>Learn Meteor!</h2>
-  <ul>
-    <li><a href="https://www.meteor.com/try" target="_blank">Do the Tutorial</a></li>
-    <li><a href="http://guide.meteor.com" target="_blank">Follow the Guide</a></li>
-    <li><a href="https://docs.meteor.com" target="_blank">Read the Docs</a></li>
-    <li><a href="https://forums.meteor.com" target="_blank">Discussions</a></li>
-  </ul>
-</template>
