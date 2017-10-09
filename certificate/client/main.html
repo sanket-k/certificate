@@ -10,7 +10,7 @@
   <button id="button_add_organization">Add Organization</button><br>
 
   <h3>Organization Details</h3>
-  <input id="get_organization" type="text" placeholder="Enter Organization Address"><br>
+  <input id="get_organization_address" type="text" placeholder="Enter Organization Address"><br>
   <button id="button_get_organization_details">Get Details</button><br>
   <pre id="organization_details_name"> </pre><br>
   <pre id="organization_details_details"> </pre><br>
@@ -26,12 +26,97 @@
   <h3>View Certificate</h3>
   <input id="view_certificate_UIN" type="text" placeholder="UIN">
   <button id="button_view_certificate"> View Certificate</button>
-  <pre id="view_certificate_first_name"></pre><br>
-  <pre id="view_certificate_last_name"></pre><br>
-  <pre id="view_certificate_certified_in"></pre><br>
-  <pre id="view_certificate_date"></pre><br>
+  <pre id="view_certificate_first_name"> </pre><br>
+  <pre id="view_certificate_last_name"> </pre><br>
+  <pre id="view_certificate_certified_in"> </pre><br>
+  <pre id="view_certificate_date"> </pre><br>
 
   <script>
-    
+  
+    var contractAddress = "0x0fbc151d6d8530c3dd1aebc7c9c364c10eadf508";
+    var abi = [{"constant":true,"inputs":[],"name":"organizationAddress","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_UIN","type":"uint256"}],"name":"displayCertificates","outputs":[{"name":"","type":"string"},{"name":"","type":"string"},{"name":"","type":"string"},{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"kill","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_UIN","type":"uint256"},{"name":"_firstName","type":"string"},{"name":"_lastName","type":"string"},{"name":"_certificationIn","type":"string"},{"name":"_date","type":"string"}],"name":"certifyStudents","outputs":[{"name":"done","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_address","type":"address"}],"name":"organizationInfoDetails","outputs":[{"name":"","type":"string"},{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_address","type":"address"},{"name":"_organizationName","type":"string"},{"name":"_organizationDetails","type":"string"}],"name":"addOrganizations","outputs":[{"name":"done","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"}];
+    var data = "6060604052341561000f57600080fd5b336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550610e7f8061005e6000396000f30060606040523615610076576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680630db703681461007b57806340c845c1146100d057806341c0e1b5146102b057806380453079146102c5578063bd882a1c1461040c578063fd4898471461052a575b600080fd5b341561008657600080fd5b61008e610601565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100db57600080fd5b6100f16004808035906020019091905050610627565b6040518080602001806020018060200180602001858103855289818151815260200191508051906020019080838360005b8381101561013d578082015181840152602081019050610122565b50505050905090810190601f16801561016a5780820380516001836020036101000a031916815260200191505b50858103845288818151815260200191508051906020019080838360005b838110156101a3578082015181840152602081019050610188565b50505050905090810190601f1680156101d05780820380516001836020036101000a031916815260200191505b50858103835287818151815260200191508051906020019080838360005b838110156102095780820151818401526020810190506101ee565b50505050905090810190601f1680156102365780820380516001836020036101000a031916815260200191505b50858103825286818151815260200191508051906020019080838360005b8381101561026f578082015181840152602081019050610254565b50505050905090810190601f16801561029c5780820380516001836020036101000a031916815260200191505b509850505050505050505060405180910390f35b34156102bb57600080fd5b6102c361091e565b005b34156102d057600080fd5b6103f2600480803590602001909190803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509190803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509190803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509190803590602001908201803590602001908080601f016020809104026020016040519081016040528093929190818152602001838380828437820191505050505050919050506109b3565b604051808215151515815260200191505060405180910390f35b341561041757600080fd5b610443600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610a6e565b604051808060200180602001838103835285818151815260200191508051906020019080838360005b8381101561048757808201518184015260208101905061046c565b50505050905090810190601f1680156104b45780820380516001836020036101000a031916815260200191505b50838103825284818151815260200191508051906020019080838360005b838110156104ed5780820151818401526020810190506104d2565b50505050905090810190601f16801561051a5780820380516001836020036101000a031916815260200191505b5094505050505060405180910390f35b341561053557600080fd5b6105e7600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509190803590602001908201803590602001908080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505091905050610c43565b604051808215151515815260200191505060405180910390f35b600160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b61062f610d9a565b610637610d9a565b61063f610d9a565b610647610d9a565b60036000868152602001908152602001600020600001600360008781526020019081526020016000206001016003600088815260200190815260200160002060020160036000898152602001908152602001600020600301838054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156107345780601f1061070957610100808354040283529160200191610734565b820191906000526020600020905b81548152906001019060200180831161071757829003601f168201915b50505050509350828054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156107d05780601f106107a5576101008083540402835291602001916107d0565b820191906000526020600020905b8154815290600101906020018083116107b357829003601f168201915b50505050509250818054600181600116156101000203166002900480601f01602080910402602001604051908101604052809291908181526020018280546001816001161561010002031660029004801561086c5780601f106108415761010080835404028352916020019161086c565b820191906000526020600020905b81548152906001019060200180831161084f57829003601f168201915b50505050509150808054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156109085780601f106108dd57610100808354040283529160200191610908565b820191906000526020600020905b8154815290600101906020018083116108eb57829003601f168201915b5050505050905093509350935093509193509193565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561097957600080fd5b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16ff5b6000846003600088815260200190815260200160002060000190805190602001906109df929190610dae565b5083600360008881526020019081526020016000206001019080519060200190610a0a929190610dae565b5082600360008881526020019081526020016000206002019080519060200190610a35929190610dae565b5081600360008881526020019081526020016000206003019080519060200190610a60929190610dae565b506001905095945050505050565b610a76610d9a565b610a7e610d9a565b600260008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600001600260008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600101818054600181600116156101000203166002900480601f016020809104026020016040519081016040528092919081815260200182805460018160011615610100020316600290048015610b975780601f10610b6c57610100808354040283529160200191610b97565b820191906000526020600020905b815481529060010190602001808311610b7a57829003601f168201915b50505050509150808054600181600116156101000203166002900480601f016020809104026020016040519081016040528092919081815260200182805460018160011615610100020316600290048015610c335780601f10610c0857610100808354040283529160200191610c33565b820191906000526020600020905b815481529060010190602001808311610c1657829003601f168201915b5050505050905091509150915091565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141515610ca057600080fd5b82600260008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000019080519060200190610cf6929190610dae565b5081600260008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206001019080519060200190610d4d929190610dae565b5083600160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550600190509392505050565b602060405190810160405280600081525090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f10610def57805160ff1916838001178555610e1d565b82800160010185558215610e1d579182015b82811115610e1c578251825591602001919060010190610e01565b5b509050610e2a9190610e2e565b5090565b610e5091905b80821115610e4c576000816000905550600101610e34565b5090565b905600a165627a7a723058209925baca5431b310c25e8ba8ea7d96ab58394dd16318e7164b2414596de2696d0029";
+
+    certificationContract = web3.eth.contract(abi).at(contractAddress);
+
+    Bcontract = web3.eth.contract(abi).at(contractAddress);
+
+    Ccontract = web3.eth.contract(abi).at(contractAddress);
+
+    //add organization 
+    var organizationAddress = document.getElementById("organization_address");
+    var organizationName = document.getElementById("organization_name");
+    var organizationDetails = document.getElementById("organization_details");
+    var buttonAddOrganization = document.getElementById("button_add_organization");
+
+    //display organization details
+    var getOrganizationAddress = document.getElementById("get_organization_address");
+    var buttonGetOrganizationDetails = document.getElementById("button_get_organization_details");
+    var organizationDetailsName = document.getElementById("organization_details_name");
+    var organizationDetailsDetails = document.getElementById("organization_details_details");
+
+    //certify
+    var certifyUIN = document.getElementById("certify_UIN");
+    var certifyFirstName = document.getElementById("certify_first_name");
+    var certifyLastName = document.getElementById("certify_last_name");
+    var certifyCertifiedIN = document.getElementById("certify_certified_in");
+    var certifyDate = document.getElementById("certify_date");
+    var buttonCertify = document.getElementById("button_certify");
+
+    //view certificate 
+    var viewCertificateUIN = document.getElementById("view_certificate_UIN");
+    var buttonViewCertificate = document.getElementById("button_view_certificate");
+    var viewCertificateFirstName = document.getElementById("view_certificate_first_name");
+    var viewCertificateLastName = document.getElementById("view_certificate_last_name");
+    var viewCertificatecertifiedIn = document.getElementById("view_certificate_certified_in");
+    var viewCertificateDate = document.getElementById("view_certificate_date");
+
+
+    //add organization
+    buttonAddOrganization.addEventListener('click', function(){
+      certificationContract.addOrganizations(organizationAddress.value, 
+                                              organizationName.value, 
+                                              organizationDetails.value, function(err, res){
+        console.log(res);
+        console.log(err);
+      });
+    })
+
+    //view organization
+    buttonGetOrganizationDetails.addEventListener('click', function(){
+      certificationContract.organizationInfoDetails(getOrganizationAddress.value, function(err, res){
+        organizationDetailsName.innerHTML = res[0];
+        organizationDetailsDetails.innerHTML = res[1];
+        console.log(res);
+        console.log(err);
+      });
+    })
+
+    //certify
+    buttonCertify.addEventListener('click', function(){
+      Bcontract.certifyStudents(certifyUIN.value, 
+                                            certifyFirstName.value, 
+                                            certifyLastName.value, 
+                                            certifyCertifiedIN.value, 
+                                            certifyDate.value, function(err, res){
+        res;
+        console.log(res);
+        console.log(err);
+      });
+    })
+
+    //view certificate
+    buttonViewCertificate.addEventListener('click', function(){
+        Bcontract.displayCertificates(viewCertificateUIN.value, function(err, res){
+            viewCertificateFirstName.innerHTML = res[0];
+            viewCertificateLastName.innerHTML = res[1];
+            viewCertificatecertifiedIn.innerHTML = res[2];
+            viewCertificateDate.innerHTML = res[3];
+            console.log(res);
+            console.log(err);
+        });
+    })
+
+
   </script>
 </body>
