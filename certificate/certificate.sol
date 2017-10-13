@@ -14,27 +14,27 @@ contract certificate {
 
 	address admin;          // user with highest rights/powers
 
-    //data storage using structs
-    //organisation information 
+	//stores the value of certified organizations
     struct organizationInformation{
         string organizationName;
         string organizationDetails;
         address organizationAddress;
     }
     
-    //certificate details
+    // stores the value of certified students 
     struct certificateDetails{
 	    string firstName;
 	    string lastName;
 	    string certificationIn;
 	    string date;
+	    address signedBy;
 	}
     
-    //specific identifier for organization Details
+    //identifier for organizationInformation is address
     mapping (address => organizationInformation) organizationInfo;
     
-    //specific identifier for certificate Details
-    mapping (uint => certificateDetails) certify;
+    //identifier for certificateDetails is UIN
+    mapping (bytes32 => certificateDetails) certify;
 
     
 	//Constructor(to initialize the admin)
@@ -67,7 +67,7 @@ contract certificate {
 		_;
 	}
 	
-	//view organization Details
+	//view organization details
 	function organizationInfoDetails(address _address) constant returns(string, string){
 	    return(organizationInfo[_address].organizationName, organizationInfo[_address].organizationDetails);
 	}
@@ -79,7 +79,7 @@ contract certificate {
 	}
 	
 	//certify student
-	function certifyStudents(uint _UIN, 
+	function certifyStudents(bytes32 _UIN, 
 	                         string _firstName, 
 	                         string _lastName,
 	                         string _certificationIn,
@@ -89,17 +89,20 @@ contract certificate {
 	                           certify[_UIN].lastName = _lastName;
 	                           certify[_UIN].certificationIn = _certificationIn; 
 	                           certify[_UIN].date = _date;
+	                           certify[_UIN].signedBy = msg.sender; 
 	                           return true;
 	                         }
 
 	
-	// view certificate 
-	function displayCertificates(uint _UIN) constant returns(string, string, string, string){
+	//view certificate using UIN (Unique Identification Number)
+	function displayCertificates(bytes32 _UIN) constant returns(string, string, string, string, address, string){
 	    return(
 	            certify[_UIN].firstName,
 	            certify[_UIN].lastName,
 	            certify[_UIN].certificationIn, 
-	            certify[_UIN].date);
+	            certify[_UIN].date,
+	            certify[_UIN].signedBy,
+	            organizationInfo[certify[_UIN].signedBy].organizationName);
 	}
 }
 
